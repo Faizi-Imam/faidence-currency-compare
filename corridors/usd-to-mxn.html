@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compare Money Transfer Rates from USA to Mexico | USD to MXN | CurrCompare</title>
+    <meta name="description" content="Find the cheapest and fastest way to send money from USD to MXN. Compare fees and exchange rates for Wise, PayPal, Ria, and MoneyGram in real-time.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="../css/styles.css">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <!-- Top Alert Bar -->
+    <div class="top-bar">
+        <div class="container flex justify-between align-center">
+            <div class="live-status">
+                <span class="pulse-dot"></span>
+                <span class="text-muted">Live mid-market rates updated:</span>
+                <strong id="last-updated-time">Fetching...</strong>
+            </div>
+            <div class="quick-links">
+                <a href="../index.html" class="link-small">Home Calculator</a>
+                <a href="usd-to-inr.html" class="link-small">USD to INR</a>
+                <a href="../reviews/wise-vs-paypal.html" class="link-small">Wise vs PayPal</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="main-header">
+        <div class="container flex justify-between align-center">
+            <a href="../index.html" class="logo flex align-center">
+                <i data-lucide="arrow-left-right" class="logo-icon"></i>
+                <span>Curr<span class="text-gradient">Compare</span></span>
+            </a>
+            <nav class="nav-menu">
+                <a href="../index.html" class="nav-link">Calculator</a>
+                <a href="#corridors" class="nav-link active">USD to MXN</a>
+                <a href="../reviews/wise-vs-paypal.html" class="nav-link">Provider Reviews</a>
+                <a href="#about" class="nav-link">Guides</a>
+            </nav>
+            <div class="header-action">
+                <a href="#calculator-section" class="btn btn-secondary flex align-center gap-2">
+                    <i data-lucide="calculator" size="16"></i>
+                    <span>Compare Now</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Grid -->
+    <main class="container main-layout" id="calculator-section">
+        <!-- Main Column (Left) -->
+        <section class="main-col">
+            <!-- Hero Slogan -->
+            <div class="hero-text">
+                <h1>Send Money to Mexico <br>at the <span class="text-gradient">Lowest Fees (USD to MXN)</span></h1>
+                <p>Transferring money to Mexico? Don't lose money on bad exchange rates. Compare real-time transfer speeds and payout amounts to get the best deal.</p>
+            </div>
+
+            <!-- Calculator Card (Preselected USD -> MXN) -->
+            <div class="card card-glow calculator-card">
+                <div class="calculator-row">
+                    <!-- Source Input -->
+                    <div class="input-group">
+                        <label for="send-amount">You Send</label>
+                        <div class="input-wrapper">
+                            <input type="number" id="send-amount" value="1000" min="10" step="50">
+                            <select id="source-currency" class="currency-select">
+                                <option value="USD" selected>🇺🇸 USD</option>
+                                <option value="EUR">🇪🇺 EUR</option>
+                                <option value="GBP">🇬🇧 GBP</option>
+                                <option value="CAD">🇨🇦 CAD</option>
+                                <option value="AUD">🇦🇺 AUD</option>
+                                <option value="JPY">🇯🇵 JPY</option>
+                                <option value="INR">🇮🇳 INR</option>
+                                <option value="MXN">🇲🇽 MXN</option>
+                                <option value="PHP">🇵🇭 PHP</option>
+                                <option value="PKR">🇵🇰 PKR</option>
+                                <option value="AED">🇦🇪 AED</option>
+                                <option value="CHF">🇨🇭 CHF</option>
+                                <option value="TRY">🇹🇷 TRY</option>
+                                <option value="SEK">🇸🇪 SEK</option>
+                                <option value="NOK">🇳🇴 NOK</option>
+                                <option value="PLN">🇵🇱 PLN</option>
+                                <option value="CNY">🇨🇳 CNY</option>
+                                <option value="SGD">🇸🇬 SGD</option>
+                                <option value="HKD">🇭🇰 HKD</option>
+                                <option value="SAR">🇸🇦 SAR</option>
+                                <option value="MYR">🇲🇾 MYR</option>
+                                <option value="THB">🇹🇭 THB</option>
+                                <option value="IDR">🇮🇩 IDR</option>
+                                <option value="NZD">🇳🇿 NZD</option>
+                                <option value="BRL">🇧🇷 BRL</option>
+                                <option value="ARS">🇦🇷 ARS</option>
+                                <option value="ZAR">🇿🇦 ZAR</option>
+                                <option value="EGP">🇪🇬 EGP</option>
+                                <option value="NGN">🇳🇬 NGN</option>
+                                <option value="KES">🇰🇪 KES</option>
+                                <option value="GHS">🇬🇭 GHS</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Swap Button -->
+                    <button class="btn-swap" id="swap-currencies-btn" aria-label="Swap Currencies">
+                        <i data-lucide="arrow-left-right"></i>
+                    </button>
+
+                    <!-- Destination Input -->
+                    <div class="input-group">
+                        <label for="receive-amount">Recipient Gets (Mid-Market)</label>
+                        <div class="input-wrapper">
+                            <input type="text" id="receive-amount" readonly class="readonly-input">
+                            <select id="dest-currency" class="currency-select">
+                                <option value="MXN" selected>🇲🇽 MXN</option>
+                                <option value="USD">🇺🇸 USD</option>
+                                <option value="EUR">🇪🇺 EUR</option>
+                                <option value="GBP">🇬🇧 GBP</option>
+                                <option value="CAD">🇨🇦 CAD</option>
+                                <option value="AUD">🇦🇺 AUD</option>
+                                <option value="JPY">🇯🇵 JPY</option>
+                                <option value="INR">🇮🇳 INR</option>
+                                <option value="PHP">🇵🇭 PHP</option>
+                                <option value="PKR">🇵🇰 PKR</option>
+                                <option value="AED">🇦🇪 AED</option>
+                                <option value="CHF">🇨🇭 CHF</option>
+                                <option value="TRY">🇹🇷 TRY</option>
+                                <option value="SEK">🇸🇪 SEK</option>
+                                <option value="NOK">🇳🇴 NOK</option>
+                                <option value="PLN">🇵🇱 PLN</option>
+                                <option value="CNY">🇨🇳 CNY</option>
+                                <option value="SGD">🇸🇬 SGD</option>
+                                <option value="HKD">🇭🇰 HKD</option>
+                                <option value="SAR">🇸🇦 SAR</option>
+                                <option value="MYR">🇲🇾 MYR</option>
+                                <option value="THB">🇹🇭 THB</option>
+                                <option value="IDR">🇮🇩 IDR</option>
+                                <option value="NZD">🇳🇿 NZD</option>
+                                <option value="BRL">🇧🇷 BRL</option>
+                                <option value="ARS">🇦🇷 ARS</option>
+                                <option value="ZAR">🇿🇦 ZAR</option>
+                                <option value="EGP">🇪🇬 EGP</option>
+                                <option value="NGN">🇳🇬 NGN</option>
+                                <option value="KES">🇰🇪 KES</option>
+                                <option value="GHS">🇬🇭 GHS</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Transfer Method Filter Buttons -->
+                <div class="filter-section">
+                    <span class="filter-label">Payout Method:</span>
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" data-method="all">All Methods</button>
+                        <button class="filter-btn" data-method="bank">Bank Deposit</button>
+                        <button class="filter-btn" data-method="cash">Cash Pickup</button>
+                        <button class="filter-btn" data-method="wallet">Mobile Wallet</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ad Slot (Horizontal) -->
+            <div class="ad-slot ad-horizontal">
+                <span class="ad-label">Sponsored Advertisement</span>
+                <div class="ad-content flex align-center justify-between">
+                    <div class="ad-left flex align-center gap-4">
+                        <div class="ad-badge">AD</div>
+                        <div>
+                            <h4 class="ad-title">Wise International Business Account</h4>
+                            <p class="ad-desc">Pay employees, get paid, and spend overseas 6x cheaper than old-school banks.</p>
+                        </div>
+                    </div>
+                    <a href="https://wise.com" target="_blank" rel="noopener" class="btn btn-primary btn-sm">Open Free Account</a>
+                </div>
+            </div>
+
+            <!-- Comparison Table Card -->
+            <div class="card table-card">
+                <div class="card-header flex justify-between align-center">
+                    <div>
+                        <h2>USD to MXN Live Rates</h2>
+                        <p class="text-muted text-sm">Real-time comparison of transfer fees and margins when sending US Dollars to Mexican Pesos.</p>
+                    </div>
+                    <button class="btn-icon" id="btn-refresh" title="Refresh Rates">
+                        <i data-lucide="refresh-cw" size="18"></i>
+                    </button>
+                </div>
+                <div class="table-responsive">
+                    <table class="compare-table">
+                        <thead>
+                            <tr>
+                                <th>Provider</th>
+                                <th>Exchange Rate</th>
+                                <th>Transfer Fee</th>
+                                <th>Speed</th>
+                                <th>Recipient Receives</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="comparison-rows">
+                            <!-- Populated dynamically by app.js -->
+                            <tr>
+                                <td colspan="6" class="text-center py-8">
+                                    <div class="loader"></div>
+                                    <p class="mt-2 text-muted">Calculating real-time rates...</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Detailed SEO Corridor Guide -->
+            <div class="card faqs-card mt-6" id="about">
+                <h2>USD to MXN Transfer Guide</h2>
+                <div class="guide-content text-muted text-sm flex flex-col gap-4">
+                    <p>US to Mexico is the largest migration corridor in the world, with billions of pesos sent home every month. Maximizing the amount of pesos that arrive in Mexico requires careful consideration of provider markups and pickup conveniences.</p>
+                    
+                    <h3 class="text-primary mt-2">1. Bank Deposit vs. Retail Cash Pickup</h3>
+                    <p>For cash pickup in Mexico, providers like <strong>Ria</strong>, <strong>Western Union</strong>, and <strong>MoneyGram</strong> partner with major Mexican chains like OXXO, Elektra, Coppel, and BanCoppel. These offer great convenience but often have slightly lower exchange rates or higher fees than bank-to-bank electronic transfers.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sidebar (Right) -->
+        <aside class="sidebar-col">
+            <!-- Square Ad Slot -->
+            <div class="ad-slot ad-square">
+                <span class="ad-label">Sponsored Finance Offer</span>
+                <div class="ad-content-square flex flex-col align-center justify-center text-center">
+                    <i data-lucide="badge-dollar-sign" class="ad-icon-big"></i>
+                    <h4 class="ad-title mt-2">Need a Better Way to Save?</h4>
+                    <p class="ad-desc text-sm">Compare high-yield savings accounts and earn up to 5.10% APY. Secure FDIC-insured returns.</p>
+                    <a href="#" class="btn btn-secondary btn-sm mt-4 w-full">Compare Savings Rates</a>
+                </div>
+            </div>
+
+            <!-- Historical Chart -->
+            <div class="card chart-card">
+                <div class="card-header flex justify-between align-center">
+                    <div>
+                        <h3>USD/MXN Trends</h3>
+                        <p class="text-muted text-xs">Exchange History</p>
+                    </div>
+                    <div class="chart-timeframe" id="timeframe-buttons">
+                        <button class="btn-timeframe active" data-range="1W">1W</button>
+                        <button class="btn-timeframe" data-range="1M">1M</button>
+                        <button class="btn-timeframe" data-range="1Y">1Y</button>
+                    </div>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="rate-trend-chart"></canvas>
+                </div>
+                <div class="chart-stats mt-4 flex justify-between border-top pt-3">
+                    <div class="stat-box">
+                        <span class="text-muted text-xs block">Highest Rate</span>
+                        <strong id="trend-high" class="text-success text-sm">-</strong>
+                    </div>
+                    <div class="stat-box text-center">
+                        <span class="text-muted text-xs block">Average Rate</span>
+                        <strong id="trend-avg" class="text-sm">-</strong>
+                    </div>
+                    <div class="stat-box text-right">
+                        <span class="text-muted text-xs block">Lowest Rate</span>
+                        <strong id="trend-low" class="text-danger text-sm">-</strong>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container grid grid-cols-4 gap-8">
+            <div class="footer-brand">
+                <a href="../index.html" class="logo logo-footer flex align-center mb-4">
+                    <i data-lucide="arrow-left-right" class="logo-icon"></i>
+                    <span>Curr<span class="text-gradient">Compare</span></span>
+                </a>
+                <p class="text-muted text-xs leading-relaxed">CurrCompare is a real-time money transfer and currency exchange comparison platform. We help users find the cheapest and fastest ways to send money overseas, bypassing hidden bank fees.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Popular Routes</h4>
+                <a href="usd-to-inr.html">US Dollar to Indian Rupee</a>
+                <a href="usd-to-mxn.html">US Dollar to Mexican Peso</a>
+                <a href="eur-to-usd.html">Euro to US Dollar</a>
+            </div>
+            <div class="footer-links">
+                <h4>Reviews</h4>
+                <a href="../reviews/wise-vs-paypal.html">Wise vs PayPal Comparison</a>
+                <a href="../reviews/ria-vs-moneygram.html">Ria vs MoneyGram Comparison</a>
+            </div>
+            <div class="footer-links">
+                <h4>Legal & Info</h4>
+                <a href="../privacy.html">Privacy Policy</a>
+                <a href="../terms.html">Terms of Service</a>
+                <a href="../disclaimer.html">Disclaimer & Accuracy</a>
+            </div>
+        </div>
+        <div class="container border-top text-center py-6 mt-8">
+            <p class="text-muted text-xs">&copy; 2026 CurrCompare. All Rights Reserved. Built for high performance & SEO.</p>
+        </div>
+    </footer>
+
+    <!-- App Logic Scripts -->
+    <script src="../js/providers.js"></script>
+    <script src="../js/chart.js"></script>
+    <script src="../js/app.js"></script>
+</body>
+</html>
