@@ -183,6 +183,51 @@
                 </div>
             </div>
 
+            <!-- Single Provider Breakdown Card -->
+            <div class="card card-glow provider-breakdown-card">
+                <div class="card-header flex justify-between align-center flex-wrap gap-4">
+                    <div>
+                        <h2>Detailed Cost Breakdown</h2>
+                        <p class="text-muted text-sm font-medium">Detailed fee structure, real rates, and hidden markups for a single provider.</p>
+                    </div>
+                    <select id="single-provider-select" class="provider-select">
+                        <!-- Options populated dynamically -->
+                    </select>
+                </div>
+                
+                <div class="breakdown-content mt-4">
+                    <div class="breakdown-grid">
+                        <div class="breakdown-item">
+                            <span class="breakdown-label">Real Mid-Market Rate</span>
+                            <strong id="breakdown-mid-rate" class="breakdown-value">-</strong>
+                        </div>
+                        <div class="breakdown-item">
+                            <span class="breakdown-label">Offered Exchange Rate</span>
+                            <strong id="breakdown-offered-rate" class="breakdown-value text-success">-</strong>
+                        </div>
+                        <div class="breakdown-item">
+                            <span class="breakdown-label">Platform Transfer Fee</span>
+                            <strong id="breakdown-platform-fee" class="breakdown-value">-</strong>
+                        </div>
+                        <div class="breakdown-item">
+                            <span class="breakdown-label">Hidden Markup Cost</span>
+                            <strong id="breakdown-hidden-fee" class="breakdown-value text-danger">-</strong>
+                        </div>
+                    </div>
+                    
+                    <div class="breakdown-summary mt-6 border-top pt-4 flex justify-between align-center flex-wrap gap-4">
+                        <div>
+                            <span class="text-muted text-xs uppercase font-bold tracking-wider block">Recipient Receives (Net Payout)</span>
+                            <strong id="breakdown-final-receives" class="text-success font-bold" style="font-size: 1.8rem; line-height: 1.2;">-</strong>
+                            <div id="breakdown-savings-subtext" class="text-success text-xs mt-1 font-medium"></div>
+                        </div>
+                        <a id="breakdown-action-btn" href="#" target="_blank" rel="noopener" class="btn btn-primary">
+                            Send with <span id="breakdown-provider-name-btn">Wise</span> <i data-lucide="arrow-up-right" size="16" style="margin-left: 4px;"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
             <!-- Dynamic Comparison Table Card -->
             <div class="card table-card">
                 <div class="card-header flex justify-between align-center">

@@ -73,7 +73,17 @@ const elements = {
     alertTargetRate: document.getElementById("alert-target-rate"),
     alertEmail: document.getElementById("alert-email"),
     alertMessage: document.getElementById("alert-message"),
-    alertHeaderPair: document.getElementById("chart-currency-pair")
+    alertHeaderPair: document.getElementById("chart-currency-pair"),
+    // Single Provider Breakdown Elements
+    singleProviderSelect: document.getElementById("single-provider-select"),
+    breakdownMidRate: document.getElementById("breakdown-mid-rate"),
+    breakdownOfferedRate: document.getElementById("breakdown-offered-rate"),
+    breakdownPlatformFee: document.getElementById("breakdown-platform-fee"),
+    breakdownHiddenFee: document.getElementById("breakdown-hidden-fee"),
+    breakdownFinalReceives: document.getElementById("breakdown-final-receives"),
+    breakdownSavingsSubtext: document.getElementById("breakdown-savings-subtext"),
+    breakdownActionBtn: document.getElementById("breakdown-action-btn"),
+    breakdownProviderNameBtn: document.getElementById("breakdown-provider-name-btn")
 };
 
 // -------------------------------------------------------------
@@ -251,6 +261,9 @@ function calculateComparison() {
     
     // Trigger Chart render
     renderRateChart(source, dest, midMarketRate, state.timeframe);
+
+    // Update single provider breakdown details
+    updateSingleBreakdown();
 }
 
 /**
@@ -466,12 +479,80 @@ function initEvents() {
 }
 
 // -------------------------------------------------------------
+// Single Provider Breakdown Logic
+// -------------------------------------------------------------
+
+function populateProvidersDropdown() {
+    if (!elements.singleProviderSelect) return;
+    elements.singleProviderSelect.innerHTML = PROVIDERS.map(p => {
+        return `<option value="${p.id}">${p.name}</option>`;
+    }).join("");
+    
+    elements.singleProviderSelect.addEventListener("change", updateSingleBreakdown);
+}
+
+function updateSingleBreakdown() {
+    const providerId = elements.singleProviderSelect.value;
+    const provider = PROVIDERS.find(p => p.id === providerId);
+    if (!provider) return;
+
+    const amount = parseFloat(elements.sendAmount.value) || 0;
+    const source = elements.sourceCurrency.value;
+    const dest = elements.destCurrency.value;
+    const midMarketRate = state.rates[dest] || 1;
+
+    // Calculations
+    const fee = provider.calculateFee(amount);
+    const rateOffered = midMarketRate * (1 - (provider.markupPercent / 100));
+    const amountDeductFee = Math.max(0, amount - fee);
+    const recipientReceives = amountDeductFee * rateOffered;
+
+    // Hidden exchange markup cost in destination currency
+    const markupCostDest = amountDeductFee * (midMarketRate - rateOffered);
+
+    // Update UI Elements
+    elements.breakdownMidRate.textContent = `1 ${source} = ${midMarketRate.toFixed(4)} ${dest}`;
+    elements.breakdownOfferedRate.textContent = `1 ${source} = ${rateOffered.toFixed(4)} ${dest}`;
+    elements.breakdownPlatformFee.textContent = `${fee.toFixed(2)} ${source}`;
+    elements.breakdownHiddenFee.textContent = `${markupCostDest.toLocaleString('en-US', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    })} ${dest} (~${provider.markupPercent}%)`;
+
+    elements.breakdownFinalReceives.textContent = `${recipientReceives.toLocaleString('en-US', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    })} ${dest}`;
+
+    // Savings vs bank
+    const bankRate = midMarketRate * 0.955;
+    const bankReceives = Math.max(0, amount - 10.0) * bankRate;
+    const savings = Math.max(0, recipientReceives - bankReceives);
+    
+    if (savings > 0) {
+        elements.breakdownSavingsSubtext.textContent = `Saves ~${savings.toLocaleString('en-US', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        })} ${dest} vs high-street banks`;
+    } else {
+        elements.breakdownSavingsSubtext.textContent = `Saves 0 ${dest} vs high-street banks`;
+    }
+
+    // Update action button
+    elements.breakdownProviderNameBtn.textContent = provider.name;
+    elements.breakdownActionBtn.href = provider.website;
+}
+
+// -------------------------------------------------------------
 // App Bootstrap
 // -------------------------------------------------------------
 
 async function init() {
     // Initial Icon replacement
     lucide.createIcons();
+    
+    // Populate single provider dropdown
+    populateProvidersDropdown();
     
     // Attach Listeners
     initEvents();
