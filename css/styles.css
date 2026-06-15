@@ -287,7 +287,7 @@ body {
 /* Main Layout Grid */
 .main-layout {
     display: grid;
-    grid-template-columns: 8fr 4fr;
+    grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
     gap: 2rem;
     margin-top: 2rem;
     margin-bottom: 4rem;
